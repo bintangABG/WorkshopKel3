@@ -44,7 +44,7 @@ public class Admin {
 
     @RequestMapping(value = "/master/datamasterproduct")
     public String dataMasterProduct(ModelMap katalog, Model kategori) {
-        katalog.put("product", ps.showAllProduct());
+        katalog.put("product", ps.showAllProducts());
         kategori.addAttribute("kategori", ks.showAllKategori());
         return "Master_Product";
     }
@@ -74,7 +74,7 @@ public class Admin {
     }
 
     @RequestMapping(value = "/master/search", method = RequestMethod.POST)
-    public String search(@RequestParam("keyword") String keyword, @RequestParam("kategori") String kategori, ModelMap katalog) {
+    public String search(@RequestParam("keyword") String keyword, @RequestParam("kategori") Integer kategori, ModelMap katalog) {
         System.out.println("keyword : " + keyword);
         System.out.println("kategori : " + kategori);
         katalog.put("products", ps.findProductByKategori(kategori, keyword));
@@ -121,4 +121,6 @@ public class Admin {
         katalog.put("orderdetail",os.detailOrder(id_order));
         return "detail_order";
     }
+    
+    
 }

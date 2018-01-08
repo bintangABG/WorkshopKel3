@@ -79,11 +79,18 @@ public class ProductService implements ProductInteface {
         List<Product> product = query.getResultList();
         return product;
     }
+    
+    public List<Product> showAllProducts() {
+        em = emf.createEntityManager();
+        Query query = em.createQuery("SELECT p from Product p");
+        List<Product> product = query.getResultList();
+        return product;
+    }
 
     public List<Product> findProductByKategori(int kategori) {
         //Product productKategori = new Product();
         em = emf.createEntityManager();
-        Query query = em.createQuery("SELECT P FROM Product P WHERE P.idKategori.idKetegori =:kategori and p.status ='aktif'");
+        Query query = em.createQuery("SELECT p FROM Product p WHERE p.idKategori.idKetegori =:kategori and p.status ='aktif'");
         query.setParameter("kategori", kategori);
         List<Product> productKategori = query.getResultList();
         return productKategori;
@@ -103,15 +110,16 @@ public class ProductService implements ProductInteface {
     public void saveProduct(Product product) {
         em = emf.createEntityManager();
         em.getTransaction().begin();
+        product.setStatus("aktif");
         em.persist(product);
         em.getTransaction().commit();
         em.close();
     }
 
     @Override
-    public List<Product> findProductByKategori(String kategori, String keyword) {
+    public List<Product> findProductByKategori(int kategori, String keyword) {
         em = emf.createEntityManager();
-        Query q = em.createQuery("select p from Product p where UPPER(p.namaProduct) LIKE '%'|| UPPER(:keyword)||'%' and p.idKategori.kategori = :kategori");
+        Query q = em.createQuery("select p from Product p where p.idKategori.idKetegori = :kategori and UPPER(p.namaProduct) LIKE '%'|| UPPER(:keyword)||'%' ");
         q.setParameter("keyword", keyword);
         q.setParameter("kategori", kategori);
         
@@ -148,7 +156,6 @@ public class ProductService implements ProductInteface {
         em = emf.createEntityManager();
         Query q = em.createQuery("select p from Product p where p.idKategori.kategori = :kategori");
         q.setParameter("kategori", kategori);
-        
         List<Product> prod = q.getResultList();
         return prod;
     }
@@ -192,6 +199,16 @@ public class ProductService implements ProductInteface {
         }
         em.close();
         return dt;
+        
+    }
+
+    public void activedProduct(Product product) {
+        em = emf.createEntityManager();
+        em.getTransaction().begin();
+        Product p = em.find(Product.class, product.getIdProduct());
+        p.setStatus("aktif");
+        em.merge(p);
+        em.getTransaction().commit();
         
     }
     

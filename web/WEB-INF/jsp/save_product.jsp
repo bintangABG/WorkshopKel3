@@ -16,6 +16,8 @@
         <title>Input Product Page</title>
     </head>
     <body>
+        <jsp:include page="header.jsp"/>
+        <center>
         <form:form action="${pageContext.request.contextPath}/product/saveproduct" modelAttribute="productBean" role="form" method="POST" enctype="multipart/form-data">
             <table>
                 <tr>
@@ -81,7 +83,9 @@
                     <td><form:hidden path="createdby" value="1"></form:hidden></td>
                     <td><form:hidden path="updatedby" value="1"></form:hidden></td>
 
-                    <td><form:hidden path="updateddate" value="12/12/2017"></form:hidden></td>    
+                    <td><form:hidden path="updateddate" value="12/12/2017"></form:hidden></td>
+                </tr>
+                <tr>
                         <td>
                         <form:button name="simpan" value="submit">Submit</form:button>
                             <input type="reset" name="reset" value="Reset">
@@ -89,5 +93,6 @@
                     </tr>
                 </table>
         </form:form>
+        </center>
     </body>
 </html>

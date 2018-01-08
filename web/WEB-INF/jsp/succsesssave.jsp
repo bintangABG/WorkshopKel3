@@ -13,5 +13,6 @@
     </head>
     <body>
         <h1>Data Berhasil Disimpan dengan Nama Produk : ${data.namaProduct}</h1>
+        
     </body>
 </html>

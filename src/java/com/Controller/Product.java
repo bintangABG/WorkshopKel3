@@ -84,7 +84,7 @@ public class Product {
         model.addAttribute("data", prod);
         prodService.saveProduct(prod);
         model.addAttribute("kategori",kat.showAllKategori());
-        return "succsesssave";
+        return "redirect:/admin/master/datamasterproduct";
     }
     
     @RequestMapping("/tambah")
@@ -136,6 +136,12 @@ public class Product {
         @RequestMapping(value="deleteProduct/{id}")
         public String deleteProduct (@PathVariable("id")Integer id,HttpSession session,@ModelAttribute("productBean") ProductFormBean productBean, Model model,HttpServletRequest request) {
             prodService.deleteProduct(prodService.findProductById(id).getIdProduct());
+            return "redirect:/admin/master/datamasterproduct";
+        }
+        
+        @RequestMapping(value="activProduct/{id}")
+        public String activedProduct (@PathVariable("id")Integer id,HttpSession session,@ModelAttribute("productBean") ProductFormBean productBean, Model model,HttpServletRequest request) {
+            prodService.activedProduct(prodService.findProductById(id));
             return "redirect:/admin/master/datamasterproduct";
         }
 }
